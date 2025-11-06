@@ -12,4 +12,6 @@ class Piscina extends Model
         'agenda',
         'ativa'
     ];
+
+    protected $table = 'piscinas';
 }
