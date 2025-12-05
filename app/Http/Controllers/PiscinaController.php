@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Piscina;
 use Illuminate\Http\Request;
 
 class PiscinaController extends Controller
@@ -27,7 +28,14 @@ class PiscinaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Piscina::create([
+            'nome' => $request->nome,
+            'capacidade' => $request->capacidade,
+            'agenda' => $request->agenda,
+            'ativo'=> $request->has('ativo') ? 1 : 0
+        ]);
+
+        return redirect()->route('piscinas.index');
     }
 
     /**
@@ -43,7 +51,10 @@ class PiscinaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $piscina = Piscina::findOrFail($id);
+
+        return view('piscinas.update')
+        ->with(['piscina' => $piscina]);
     }
 
     /**
@@ -51,14 +62,27 @@ class PiscinaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $piscina = Piscina::findOrFail($id);
+
+        $piscina->update([
+            'nome' => $request->nome,
+            'capacidade' => $request->capacidade,
+            'agenda' => $request->agenda,
+            'ativo'=> $request->has('ativo') ? 1 : 0
+        ]);
+
+        return redirect()->route('piscinas.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        $piscina = Piscina::findOrFail($id);
+
+        $piscina->delete();
+
+        return redirect()->route('piscinas.index');
     }
 }

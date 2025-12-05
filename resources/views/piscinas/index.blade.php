@@ -7,8 +7,23 @@
     <title>Piscinas</title>
 </head>
 <body>
+    <a href="{{ route('piscinas.create')}}">Criar Piscina</a>
+
     @foreach ($piscinas as $piscina)
-        <div>{{ $piscina->nome }}</div>
+        <div>
+            {{ $piscina->nome }}
+
+            <form action="{{ route('piscinas.delete', 
+            $piscina->id) }}" 
+                method="POST">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit">
+                Excluir
+            </button>
+        </form>
+        </div>
     @endforeach
 </body>
 </html>
